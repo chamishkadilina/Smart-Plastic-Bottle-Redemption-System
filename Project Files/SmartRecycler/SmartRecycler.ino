@@ -173,7 +173,7 @@ void loop()
           }
 
           // Failed to capture image by Python OpenCV. hens, reject the object.
-          else (message == "Failed to capture image") {
+          else {
 
             // LCD display message "Failed to capture image"
             lcd.setCursor(0, 1); 
