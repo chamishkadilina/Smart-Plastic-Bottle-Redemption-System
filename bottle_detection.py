@@ -1,10 +1,13 @@
 import cv2
 import numpy as np
 import tensorflow as tf
-from tensorflow.keras.applications.mobilenet_v2 import MobileNetV2, preprocess_input, decode_predictions
+from tensorflow.keras.applications.mobilenet_v2 import MobileNetV2, preprocess_input, decode_predictions # type: ignore
 
 # Load pre-trained MobileNetV2 model + higher level layers
 model = MobileNetV2(weights='imagenet')
+
+# Define myPrediction at the module level
+myPrediction = None
 
 def capture_image():
     # Initialize the camera
@@ -40,9 +43,13 @@ def classify_image(image):
     return decoded_predictions
 
 def main():
+    # Declare myPrediction as global to modify it
+    global myPrediction
+
     # Capture image from camera
     image = capture_image()
     if image is None:
+        myPrediction = "Failed to capture image"
         return
     
     # Classify the captured image
@@ -55,10 +62,12 @@ def main():
     # Check if one of the top predictions is a 'bottle'
     for _, label, _ in predictions[0]:
         if 'bottle' in label:
-            print("Plastic bottle detected!")
+            #print("Plastic bottle detected!")
+            myPrediction = "Plastic bottle detected!"
             return
     
-    print("No plastic bottle detected.")
+    # print("No plastic bottle detected.")
+    myPrediction = "No plastic bottle detected."
 
 if __name__ == "__main__":
     main()
