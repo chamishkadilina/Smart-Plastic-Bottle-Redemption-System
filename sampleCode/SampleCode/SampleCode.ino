@@ -1,3 +1,5 @@
+bool oneTimeLoop = true;
+
 void setup() {
   // Start the serial communication
   Serial.begin(115200);
@@ -10,8 +12,11 @@ void setup() {
 }
 
 void loop() {
-  //  send a message to the Python script
-  Serial.println("Weight is ok");
+  if (oneTimeLoop) {
+     //  send a message to the Python script
+    Serial.println("Weight is ok");
+    oneTimeLoop = false;
+  }
 
   // Check if data is available to read from Python
   if (Serial.available() > 0) {
@@ -27,22 +32,16 @@ void loop() {
       digitalWrite(2, HIGH);
       delay(1000);
       digitalWrite(2, LOW);
-      delay(1000);
     }
     else if (message == "No plastic bottle detected.") {
       digitalWrite(4, HIGH);
       delay(1000);
       digitalWrite(4, LOW);
-      delay(1000);
     }
     else if (message == "Failed to capture image") {
       digitalWrite(18, HIGH);
       delay(1000);
       digitalWrite(18, LOW);
-      delay(1000);
     }
   }
-
-  // Add a small delay to avoid flooding the serial port
-  delay(4000);
 }
