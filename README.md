@@ -77,7 +77,7 @@ graph TD;
     UpdateUserPointsInDatabase-->DisplayUserPointsOnWebsite;
 ```
 ### Contributing
-We welcome contributions! Please read our [Contributing Guidelines]() for more information.
+Contributions are welcome! If you find any issues or want to add new features, feel free to fork the repository and submit a pull request.
 ### License
 This project is licensed under the MIT License. See the [LICENSE]() file for details.
 ### Acknowledgements
