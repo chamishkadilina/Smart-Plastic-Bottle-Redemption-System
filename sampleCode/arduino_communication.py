@@ -1,10 +1,11 @@
 import serial
 import time
 import bottle_detection
+import db_updater
 
 # Set up the serial port
 ser = serial.Serial('COM3', 115200) # serial port number
-time.sleep(2)  # Give some time for the serial connection to initialize
+time.sleep(2)  # Allow time for the serial connection to initialize
 
 # Keep the script running to receive the response from Arduino
 def interact_with_arduino():
@@ -12,16 +13,23 @@ def interact_with_arduino():
         if ser.in_waiting > 0:
             # Read the message from Arduino
             message_from_arduino = ser.readline().decode('utf-8', errors='ignore').strip()
-            if(message_from_arduino == "Weight is ok"):
+
+            # Check if the message indicates weight is OK
+            if message_from_arduino.startswith("Weight is ok, User: "):
                 print(f"Read the message from Arduino: {message_from_arduino}")
+
+                # Extract the user name from the message
+                user_name = message_from_arduino.split("User: ")[1]
                 
                 # Call the main function from bottle_detection to capture and classify the image
                 bottle_detection.main()
+
                 # to get myPrediction value into this code space
                 prediction = bottle_detection.myPrediction
 
-                # Send a message back to Arduino
+                # Send a message back to Arduino and update the database
                 if(prediction == "Plastic bottle detected!"):
+                    db_updater.record_user_points(user_name)
                     ser.write(b"Plastic bottle detected!\n")
                     
                 elif(prediction == "No plastic bottle detected."):
