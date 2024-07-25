@@ -1,4 +1,5 @@
 bool oneTimeLoop = true;
+String userName = "harini";
 
 void setup() {
   // Start the serial communication
@@ -14,8 +15,9 @@ void setup() {
 void loop() {
   if (oneTimeLoop) {
      //  send a message to the Python script
-    Serial.println("Weight is ok");
-    oneTimeLoop = false;
+    Serial.print("Weight is ok, User: ");
+    Serial.println(userName);
+    oneTimeLoop = true;
   }
 
   // Check if data is available to read from Python
