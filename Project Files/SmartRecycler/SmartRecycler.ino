@@ -21,11 +21,6 @@ LiquidCrystal_I2C lcd(0x27, 16, 2); // LCD address = 0x27, 16 columns, 2 rows
 float minWeight = 17.0; // Minimum acceptable weight in grams
 float maxWeight = 23.0; // Maximum acceptable weight in grams
 
-//-------------------chamishka added-------------------
-// user name
-String userName;
-//-------------------chamishka added-------------------
-
 void setup() {
   //-------------------chamishka added-------------------
     while (!Serial) {
@@ -89,25 +84,6 @@ void loop()
     lcd.print("Registered"); // Display message on LCD
     Serial.println("RFID card registered. Proceeding..."); // Serial monitor output
     delay(2000); // Delay for readability
-
-    //-------------------chamishka added-------------------
-    // assign a user name for specific RFID Card
-    // registered user1
-    if(content.substring(1) == "F3 C9 71 A9"){
-      userName ="Chamishka"
-    }
-    // registered user2
-    else if(content.substring(1) == "A3 48 13 AA"){
-      userName ="Harini"
-    }
-    // not registed users
-    else{
-      userName ="Unknown User"
-    }
-    // Send user name to Python script
-    Serial.println(userName);
-    //-------------------chamishka added-------------------
-
     lcd.clear(); // Clear LCD screen
 
     lcd.setCursor(0, 0); // Set cursor to top left corner
@@ -136,9 +112,8 @@ void loop()
     // Check if weight is within our acceptable range
     if (weight >= minWeight && weight <= maxWeight) {
       //-------------------chamishka added-------------------
-      // send a message to the Python script
-      Serial.print("Weight is ok, User: ");
-      Serial.println(userName);
+      //  Weight is ok. so,send a message to the Python script
+      Serial.println("Weight is ok");
       //-------------------chamishka added-------------------
 
       lcd.setCursor(0, 1); // Set cursor to bottom left corner
