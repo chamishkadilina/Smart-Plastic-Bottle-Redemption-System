@@ -5,7 +5,7 @@ Welcome to the Smart Plastic Bottle Redemption System! This project integrates R
 * [Project Overview](Project_Overview)
 * [Features](Features)
 * [Technologies Used](Technologies_Used)
-* [Installation](Installation)
+* [Project Setup Guide](Project_Setup_Guide)
 * [Usage](Usage)
 * [Project Structure](Project_Structure)
 * [Contributing](Contributing)
@@ -33,26 +33,8 @@ The Smart Plastic Bottle Redemption System is designed to automate the process o
 * Xampp: For the web interface to display user points.
 * SQLite: For user and points database.
 
-### Installation
-**Hardware Setup**
-1. Arduino and RFID Setup:
-   * Connect the RFID reader to the Arduino.
-   * Connect the servo motors to the Arduino.
-   * Connect the 16x2 LCD display to the Arduino.
-   * Connect the load cell to the Arduino using an HX711 amplifier.
-
-2. Camera Setup:
-
-   * Ensure your laptop’s built-in camera or an external camera is set up for image capture.
-**Software Setup**
-1. Clone the Repository:<br>
-   ```sh
-   https://github.com/chamishkadilina/Smart-Plastic-Bottle-Redemption-System.git
-   ```
-2. Set Up Python Environment:
-3. Arduino Code:
-   * Upload the ```arduino/arduino_code.ino``` to the Arduino board using the Arduino IDE.
-4. Configure Database:
+### Project Setup Guide
+* Refer the ```Project Setup Guide.md``` file for detailed instructions.
 ### Usage
 1. Start the Arduino Program:
 2. Run the Main Python Program:
