@@ -1,92 +1,91 @@
+# Smart Plastic Bottle Redemption System
+Welcome to the Smart Plastic Bottle Redemption System! This project integrates RFID authentication, Arduino-based servo motor control, load cell weight verification, and image classification using OpenCV and TensorFlow to create an automated bottle redemption machine.
 
-# Project Setup Guide 🍀
-> [!NOTE]
-> This guide is for setting up the project on a ``Windows machine``.</br>
-> If you're using a other OS, please contact us for specific instructions.
+### Table of Contents
+* [Project Overview](Project_Overview)
+* [Features](Features)
+* [Technologies Used](Technologies_Used)
+* [Installation](Installation)
+* [Usage](Usage)
+* [Project Structure](Project_Structure)
+* [Contributing](Contributing)
+* [License](License)
+* [Acknowledgements](Acknowledgements)
 
-### 1. Clone the Repository
-- Clone the project repository to your local machine.
+### Project Overview
+The Smart Plastic Bottle Redemption System is designed to automate the process of accepting and classifying plastic bottles for recycling. The system uses RFID to authenticate users, a load cell to verify the weight of the bottle, and a pre-trained MobileNetV2 model to classify the object as a plastic bottle or reject it. Points are awarded to registered users, which they can view on a web interface.
+
+### Features
+* RFID User Authentication: Ensures only registered users can use the machine.
+* Load Cell Weight Verification: Accepts objects weighing between 17g-23g.
+* Image Classification: Uses OpenCV and TensorFlow to classify objects.
+* Servo Motor Control: Directs accepted bottles to an acceptance box and rejected items to a rejection box.
+* User Points Database: Awards points to users for accepted bottles and provides a web interface to view points.
+* User Guidance Display: An Arduino 16x2 LCD provides step-by-step instructions.
+
+### Technologies Used
+* Arduino: For controlling servo motors and displaying messages.
+* RFID: For user authentication.
+* Load Cell: For weight verification.
+* OpenCV: For capturing and processing images.
+* TensorFlow: For image classification using a pre-trained MobileNetV2 model.
+* Python: Backend logic for image processing and machine learning.
+* Xampp: For the web interface to display user points.
+* SQLite: For user and points database.
+
+### Installation
+**Hardware Setup**
+1. Arduino and RFID Setup:
+   * Connect the RFID reader to the Arduino.
+   * Connect the servo motors to the Arduino.
+   * Connect the 16x2 LCD display to the Arduino.
+   * Connect the load cell to the Arduino using an HX711 amplifier.
+
+2. Camera Setup:
+
+   * Ensure your laptop’s built-in camera or an external camera is set up for image capture.
+**Software Setup**
+1. Clone the Repository:<br>
+   ```sh
+   https://github.com/chamishkadilina/Smart-Plastic-Bottle-Redemption-System.git
+   ```
+2. Set Up Python Environment:
+3. Arduino Code:
+   * Upload the ```arduino/arduino_code.ino``` to the Arduino board using the Arduino IDE.
+4. Configure Database:
+### Usage
+1. Start the Arduino Program:
+2. Run the Main Python Program:
+3. User Interaction:
+   * Users authenticate with their RFID cards.
+   * Place the bottle on the load cell.
+   * If the weight is correct, the camera captures an image and the classification process begins.
+   * The servo motor directs the bottle to the appropriate box based on the classification.
+   * Accepted bottles add points to the user's account, viewable on the web interface.
+### Project Structure
+```mermaid
+graph TD;
+    RegisteredUser-->AuthenticateRFID;
+    AuthenticateRFID-->DoorOpens;
+    AuthenticateRFID-->DoorRemainsClosed;
+    DoorOpens-->CheckWeightWithLoadCell;
+    CheckWeightWithLoadCell-->RejectBox;
+    CheckWeightWithLoadCell-->ProcessImageWithPythonOpenCV;
+    ProcessImageWithPythonOpenCV-->RejectBox;
+    ProcessImageWithPythonOpenCV-->RotateServoMotorToAcceptBox;
+    RotateServoMotorToAcceptBox-->UpdateUserPointsInDatabase;
+    UpdateUserPointsInDatabase-->DisplayUserPointsOnWebsite;
 ```
-https://github.com/chamishkadilina/Smart-Plastic-Bottle-Redemption-System.git
-```
-
-### 2. Install Python
-- Download Python :
-  - Visit the official Python website: [Python Downloads](https://www.python.org/downloads/).
-  - Download the latest version of Python for Windows.
-- Install Python :
-  - Run the downloaded installer.
-  - During installation, ensure the following options are selected :
-    - Use admin privileges when installing py.exe
-    - Add python.exe to PATH
-- This setup ensures that Python and pip commands are recognized in the command prompt.
-- Verify Installation :
-		Open a new command prompt window and type :
-    ```
-    python --version
-    ```
-    ```
-    pip --version
-    ```
-- These commands should display the versions of Python and pip installed on your system.
-
-### 3. Install Required Python Packages
-- To run this project, you'll need to install several Python packages.</br>
-(The approximate download size is 500MB)
-- Packages :
-  - ```PySerial``` For communication with the Arduino.
-  - ```OpenCV-python``` For capturing and processing images.
-  - ```NumPy``` For handling arrays and numerical operations.
-  - ```TensorFlow``` For loading and using the MobileNetV2 model.
-  
-- To install all required packages open the command prompt and run this :
-  ```
-  pip install pyserial opencv-python numpy tensorflow
-  ```
-
-### 4. Set Up a Code Editor
-- We recommend using Visual Studio Code. Download and install it or any other preferred code editor.
-- install these VS Code Extensions :
-  - ```Python```
-  - ```Pylance```
-  - ```Python Debugger```
-
-### 5. Install Arduino IDE
-- Download and Install :
-  - Visit the official Arduino ide website : [Arduino IDE download](https://www.arduino.cc/en/software).
-  - Follow a YouTube tutorial if needed to set up the IDE correctly with your Arduino board.
-
-### 6. Install XAMPP
-- Download and Install :
-  - Visit the official XAMPP website : [Download XAMPP](https://www.apachefriends.org/download.html).
-  - This XAMPP provides a local web server environment for testing and development.
-
-### 7. Start XAMPP Server
-- Launch XAMPP Control Panel:
-- Navigate to ```C:\xampp\xampp-control```.
-- Start ```Apache``` and ```MySQL``` services.
-- Minimize the control panel. ( Because it needs to remain running in the background. )
-
-### 8. Create a Database and Table in MySQL
-- In your web browser, access phpMyAdmin by navigating to ```http://localhost/phpmyadmin```.
-- In phpMyAdmin, create a database named ```bottle_db``` and a table named ```user_data``` with the following columns:
-  - id (INT, PRIMARY KEY, AUTO_INCREMENT)
-  - name (VARCHAR)
-  - value (INT)
-### 9. View the Data on Webpage
-- Insert example data manually in the ```user_data``` table to ensure it is functioning correctly.
-- In your browser, navigate to ```http://localhost/display_data.php``` to view the inserted data. ( After verifying, delete the manually added data. )
-
-### 10. Set Up Project Files
-- Prepare Web Resources :
-  - Go to the ```Smart-Plastic-Bottle-Redemption-System``` folder, then navigate to ```Project Files```.
-  - Copy ```display_data.php``` and ```website_bg.jpg``` paste to ```C:\xampp\htdocs```.
-
-### 11. Upload Arduino Sketch
-- In the ```Smart-Plastic-Bottle-Redemption-System``` folder, go to ```Project Files\SmartRecycler```.
-- Open ```SmartRecycler.ino``` in the Arduino IDE and upload it to your Arduino board. ```Keep the USB cable connected``` as it is required to run the Python script.
-
-### 12. Run the Project 😍
-- Run Python Script :
-  - In VS Code, open the project and navigate to ```Project Files```.
-  - Run the ```arduino_communication.py``` file to start the project.
+### Contributing
+Contributions are welcome! If you find any issues or want to add new features, feel free to fork the repository and submit a pull request.
+### License
+This project is licensed under the MIT License. See the [LICENSE]() file for details.
+### Acknowledgements
+   * Special thanks to our project team members.
+     * CT/2020/027 - J.A.C.D.Kumara
+     * CT/2020/047 - H.I.K.Jayarathna
+     * CT/2020/065 - E.D.K.Chamara
+     * ET/2020/010 - G.G.H.N. Kokilani
+     * ET/2020/015 - P.C.Vithanage
+     * ET/2020/098 - A.S.S.Sisiranatha
+   * Inspired by various open-source projects and tutorials on Arduino, OpenCV, and TensorFlow.
