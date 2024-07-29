@@ -1,49 +1,42 @@
 # Smart Plastic Bottle Redemption System
-Welcome to the Smart Plastic Bottle Redemption System! This project integrates RFID authentication, Arduino-based servo motor control, load cell weight verification, and image classification using OpenCV and TensorFlow to create an automated bottle redemption machine.
+### Project Overview
+This project involves a machine equipped with an RFID card reader to authenticate users. Users can insert bottles into the machine, which then classifies and detects if the item is a bottle. If it is a bottle, the user's points are updated on a webpage; if not, the machine rejects the item.
 
 ### Table of Contents
-* [Project Overview](Project_Overview)
 * [Features](Features)
 * [Technologies Used](Technologies_Used)
 * [Project Setup Guide](Project_Setup_Guide)
 * [Usage](Usage)
 * [Project Structure](Project_Structure)
-* [Contributing](Contributing)
 * [License](License)
 * [Acknowledgements](Acknowledgements)
-
-### Project Overview
-The Smart Plastic Bottle Redemption System is designed to automate the process of accepting and classifying plastic bottles for recycling. The system uses RFID to authenticate users, a load cell to verify the weight of the bottle, and a pre-trained MobileNetV2 model to classify the object as a plastic bottle or reject it. Points are awarded to registered users, which they can view on a web interface.
+* [Contributing](Contributing)
 
 ### Features
-* RFID User Authentication: Ensures only registered users can use the machine.
-* Load Cell Weight Verification: Accepts objects weighing between 17g-23g.
-* Image Classification: Uses OpenCV and TensorFlow to classify objects.
-* Servo Motor Control: Directs accepted bottles to an acceptance box and rejected items to a rejection box.
-* User Points Database: Awards points to users for accepted bottles and provides a web interface to view points.
-* User Guidance Display: An Arduino 16x2 LCD provides step-by-step instructions.
+* RFID Authentication: Access control for registered users.
+* Load Cell Verification: Checks weight (17g-23g) of objects.
+* Image Classification: Uses OpenCV and TensorFlow to detect bottles.
+* Servo Motor Control: Directs items based on classification results.
+* User Points Database: Tracks user points, accessible via a web interface.
 
 ### Technologies Used
-* Arduino: For controlling servo motors and displaying messages.
-* RFID: For user authentication.
-* Load Cell: For weight verification.
-* OpenCV: For capturing and processing images.
-* TensorFlow: For image classification using a pre-trained MobileNetV2 model.
-* Python: Backend logic for image processing and machine learning.
-* Xampp: For the web interface to display user points.
-* SQLite: For user and points database.
+* Arduino, RFID, Load Cell, OpenCV, TensorFlow, Python, XAMPP, SQLite
 
 ### Project Setup Guide
 * Refer the ```Project Setup Guide.md``` file for detailed instructions.
+
 ### Usage
-1. Start the Arduino Program:
-2. Run the Main Python Program:
+1. Launch XAMPP Control Panel and Start ```Apache``` and ```MySQL``` services.
+2. In your browser, navigate to ```http://localhost/display_data.php``` to view the webpage.
+1. Start the Arduino Program ```SmartRecycler.ino```.
+2. Run the Main Python Program ```arduino_communication.py```.
 3. User Interaction:
    * Users authenticate with their RFID cards.
    * Place the bottle on the load cell.
    * If the weight is correct, the camera captures an image and the classification process begins.
    * The servo motor directs the bottle to the appropriate box based on the classification.
    * Accepted bottles add points to the user's account, viewable on the web interface.
+
 ### Project Structure
 ```mermaid
 graph TD;
@@ -58,10 +51,9 @@ graph TD;
     RotateServoMotorToAcceptBox-->UpdateUserPointsInDatabase;
     UpdateUserPointsInDatabase-->DisplayUserPointsOnWebsite;
 ```
-### Contributing
-Contributions are welcome! If you find any issues or want to add new features, feel free to fork the repository and submit a pull request.
 ### License
 This project is licensed under the MIT License. See the [LICENSE]() file for details.
+
 ### Acknowledgements
    * Special thanks to our project team members.
      * CT/2020/027 - J.A.C.D.Kumara
@@ -71,3 +63,6 @@ This project is licensed under the MIT License. See the [LICENSE]() file for det
      * ET/2020/015 - P.C.Vithanage
      * ET/2020/098 - A.S.S.Sisiranatha
    * Inspired by various open-source projects and tutorials on Arduino, OpenCV, and TensorFlow.
+
+### Contributing
+Contributions are welcome! If you find any issues or want to add new features, feel free to fork the repository and submit a pull request.
