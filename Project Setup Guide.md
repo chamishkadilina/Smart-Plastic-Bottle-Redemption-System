@@ -54,6 +54,20 @@ https://github.com/chamishkadilina/Smart-Plastic-Bottle-Redemption-System.git
 - Download and Install :
   - Visit the official Arduino ide website : [Arduino IDE download](https://www.arduino.cc/en/software).
   - Follow a YouTube tutorial if needed to set up the IDE correctly with your Arduino board.
+  - Required Arduino libraries
+
+	> ```Easy MFRC522```
+	  by Pablo Sampaio
+	
+	> ```HX711_ADC```
+	> by Olav Kallhovd
+	
+	> ```LiquidCrystal I2C```
+	> by Frank de Brabander
+	
+	> ```MFRC522```
+	> by GithubCommunity
+
 
 ### 6. Install XAMPP
 - Download and Install :
