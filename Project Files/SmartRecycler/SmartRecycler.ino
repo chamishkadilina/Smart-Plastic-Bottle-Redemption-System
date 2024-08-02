@@ -17,8 +17,8 @@ MFRC522 mfrc522(SS_PIN, RST_PIN);
 LiquidCrystal_I2C lcd(0x27, 16, 2); // LCD address = 0x27, 16 columns, 2 rows
 
 
-float minWeight = 10.0; // define min weight (g)
-float maxWeight = 40.0; // define max weight (g)
+float minWeight = 15.0; // define min weight (g)
+float maxWeight = 30.0; // define max weight (g)
 String userName;
 
 // setup code here, this run once
