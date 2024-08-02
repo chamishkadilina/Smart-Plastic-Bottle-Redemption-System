@@ -4,7 +4,7 @@ import bottle_detection
 import db_updater
 
 # Set up the serial port
-ser = serial.Serial('COM3', 115200) # serial port number
+ser = serial.Serial('COM3', 9600) # serial port number
 time.sleep(2)  # Allow time for the serial connection to initialize
 
 # Keep the script running to receive the response from Arduino

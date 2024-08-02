@@ -17,8 +17,8 @@ MFRC522 mfrc522(SS_PIN, RST_PIN);
 LiquidCrystal_I2C lcd(0x27, 16, 2); // LCD address = 0x27, 16 columns, 2 rows
 
 
-float minWeight = 17.0; // define min weight (g)
-float maxWeight = 23.0; // define max weight (g)
+float minWeight = -1000.0; // define min weight (g)
+float maxWeight = 1000.0; // define max weight (g)
 String userName;
 
 // setup code here, this run once
@@ -50,8 +50,8 @@ void loop() {
   lcd.setCursor(0, 0);
   lcd.print("Please scan your");
   lcd.setCursor(0,1);
-  lcd.print("RFID card....");
-  delay(2000);
+  lcd.print("RFID card...");
+  delay(3000);
 
   // Check for new RFID card and Read it
   if (!mfrc522.PICC_IsNewCardPresent() || !mfrc522.PICC_ReadCardSerial()) {
@@ -76,13 +76,13 @@ void loop() {
     lcd.print("Insert bottle ");
     lcd.setCursor(0, 1);
     lcd.print("to the machine");
-    delay(2000);
+    delay(3000);
 
     // Open servo motor to allow bottle insert to the machine
     boxOpener.write(0); // Rotate servo to 0 degrees
-    delay(7000); // Wait for servo to open
+    delay(3000); // Wait for servo to open
     boxOpener.write(90); // Rotate servo to 90 degrees (adjust as needed)
-    delay(4000); // Wait for bottle insertion
+    delay(3000); // Wait for bottle insertion
 
     // Measure weight after bottle insertion using load cell
     LoadCell.update(); // Update load cell data
@@ -103,7 +103,7 @@ void loop() {
       // Display 'Bottle weight ok' on LCD
       lcd.setCursor(0, 1);
       lcd.print("Bottle weight ok"); 
-      delay(4000);
+      delay(3000);
 
       if (Serial.available() > 0) {
         // Read incoming data from Python
@@ -122,7 +122,7 @@ void loop() {
           lcd.print("rejected by");
           lcd.setCursor(0, 1); 
           lcd.print("Python OpenCV");
-          delay(4000);
+          delay(3000);
           // Rotate servo to reject box and then return to initial position
           moveServo(bottleServo, 90, 0);  
           moveServo(bottleServo, 0, 90);  
@@ -132,7 +132,7 @@ void loop() {
           // Display 'capture Failed' on LCD
           lcd.setCursor(0, 0); 
           lcd.print("capture Failed");
-          delay(4000);
+          delay(3000);
           // Rotate servo to reject box and then return to initial position
           moveServo(bottleServo, 90, 0);  
           moveServo(bottleServo, 0, 90); 
@@ -147,7 +147,7 @@ void loop() {
       lcd.print("Weight out of");
       lcd.setCursor(0, 1);
       lcd.print("range");
-      delay(4000);
+      delay(3000);
       // Rotate servo to reject box and then return to initial position
       moveServo(bottleServo, 90, 0);
       moveServo(bottleServo, 0, 90);
@@ -168,7 +168,7 @@ void loop() {
     lcd.print(content.substring(1));
     lcd.setCursor(0, 1);
     lcd.print("Not Registered");
-    delay(4000);
+    delay(3000);
     lcd.clear();
   }
   // Delay to prevent serial flooding
