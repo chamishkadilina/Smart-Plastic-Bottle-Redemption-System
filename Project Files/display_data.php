@@ -6,7 +6,7 @@
     <title>Smart Plastic Bottle Redemption System</title>
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Open Sans', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 0;
             display: flex;
@@ -37,7 +37,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-top: 100px; /* Space for the title */
+            margin-top: 100px;
         }
         h1 {
             font-size: 2em;
@@ -88,41 +88,62 @@
             to { transform: translateY(0); opacity: 1; }
         }
     </style>
+    <script>
+        function fetchDataAndUpdate() {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', 'fetch_data.php', true);
+
+            xhr.onload = function() {
+                if (xhr.status >= 200 && xhr.status < 400) {
+                    var data = JSON.parse(xhr.responseText);
+                    updateTable(data);
+                } else {
+                    console.error("Failed to fetch data: " + xhr.status);
+                }
+            };
+
+            xhr.onerror = function() {
+                console.error("Error fetching data.");
+            };
+
+            xhr.send();
+        }
+
+        function updateTable(data) {
+            var table = document.getElementById('data_table');
+            var rows = table.getElementsByTagName('tr');
+
+            while (table.rows.length > 1) {
+                table.deleteRow(1);
+            }
+
+            data.forEach(function(item) {
+                var newRow = table.insertRow();
+                var cell1 = newRow.insertCell(0);
+                var cell2 = newRow.insertCell(1);
+                var cell3 = newRow.insertCell(2);
+
+                cell1.innerText = item.id;
+                cell2.innerText = item.name;
+                cell3.innerText = item.value;
+            });
+        }
+
+        fetchDataAndUpdate();
+        setInterval(fetchDataAndUpdate, 2000); // Time --> Update Website
+    </script>
 </head>
 <body>
     <div class="header">Smart Plastic Bottle Redemption System</div>
     <div class="container">
         <h1>Reward Dashboard</h1>
-        
-        <?php
-        $servername = "localhost";
-        $username = "root";
-        $password = ""; // Enter your MySQL root password
-        $dbname = "bottle_db";
-
-        // Create connection
-        $conn = new mysqli($servername, $username, $password, $dbname);
-
-        // Check connection
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        }
-
-        $sql = "SELECT id, name, value FROM user_data";
-        $result = $conn->query($sql);
-
-        if ($result->num_rows > 0) {
-            echo "<table><tr><th>ID</th><th>User</th><th>Available points</th></tr>";
-            // Output data of each row
-            while($row = $result->fetch_assoc()) {
-                echo "<tr><td>" . $row["id"]. "</td><td>" . $row["name"]. "</td><td>" . $row["value"]. "</td></tr>";
-            }
-            echo "</table>";
-        } else {
-            echo "<p>No results found.</p>";
-        }
-        $conn->close();
-        ?>
+        <table id="data_table">
+            <tr>
+                <th>ID</th>
+                <th>User</th>
+                <th>Available points</th>
+            </tr>
+        </table>
     </div>
 </body>
 </html>
