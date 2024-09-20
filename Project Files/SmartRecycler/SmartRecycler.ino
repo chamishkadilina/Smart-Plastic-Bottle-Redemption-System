@@ -51,7 +51,7 @@ void loop() {
   lcd.print("Please scan your");
   lcd.setCursor(0,1);
   lcd.print("RFID card...");
-  delay(3000);
+  delay(1000);
 
   // Check for new RFID card and Read it
   if (!mfrc522.PICC_IsNewCardPresent() || !mfrc522.PICC_ReadCardSerial()) {
@@ -65,11 +65,22 @@ void loop() {
      content.concat(String(mfrc522.uid.uidByte[i], HEX));
   }
   content.toUpperCase(); // Convert to uppercase
+  String cardUID = content.substring(1); // card user id assign to a variable named 'cardUID'
 
   // Check if the scanned RFID card is registered or not
-  if (content.substring(1) == "F3 C9 71 A9" || content.substring(1) == "A3 48 13 AA") {
-    // Assign a user name for specific RFID Card using ternary operator
-    userName = (content.substring(1) == "F3 C9 71 A9") ? "Chamishka" : "Harini";
+  if (cardUID == "33 6 72 A9" || cardUID == "A3 48 13 AA" || cardUID == "F3 C9 71 A9") {
+
+    // Assign a user name for specific RFID Card using if condition
+    if (cardUID == "33 6 72 A9") {
+      userName = "Chamishka Dilina";
+
+    }else if (cardUID == "A3 48 13 AA") {
+      userName = "Harini Kokilani";
+
+    }else {
+      userName = "Promod Chanuka";
+    }
+
 
     // Show 'Insert bottle' message in LCD
     lcd.setCursor(0, 0);
@@ -111,10 +122,18 @@ void loop() {
 
         // Accepted by Python OpenCV
         if (message == "Plastic bottle detected!") {
+          // tell user to checky your balance on over website
+          lcd.setCursor(0, 0); 
+          lcd.print("Check balance");
+          lcd.setCursor(0, 1); 
+          lcd.print("on our website.");
+          delay(3000);
+
           // Rotate servo to accept box and then return to initial position
           moveServo(bottleServo, 90,180);  
-          moveServo(bottleServo, 180, 90);  
+          moveServo(bottleServo, 180, 90);
         }
+
         // Rejected by Python OpenCV
         else if (message == "No plastic bottle detected.") {
           // Display 'Bottle weight ok' on LCD
@@ -123,6 +142,7 @@ void loop() {
           lcd.setCursor(0, 1); 
           lcd.print("Python OpenCV");
           delay(3000);
+
           // Rotate servo to reject box and then return to initial position
           moveServo(bottleServo, 90, 0);  
           moveServo(bottleServo, 0, 90);  
@@ -171,6 +191,14 @@ void loop() {
     delay(3000);
     lcd.clear();
   }
+
+  // messege at the end of program 'thank for using our system!'
+  lcd.setCursor(0, 0); 
+  lcd.print("Thanks for using");
+  lcd.setCursor(0, 1); 
+  lcd.print("our system :)");
+  delay(3000);
+
   // Delay to prevent serial flooding
   delay(2000);
 }
