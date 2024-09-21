@@ -2,8 +2,10 @@
 ### Project Overview
 This project involves a machine equipped with an RFID card reader to authenticate users. Users can insert bottles into the machine, which then classifies and detects if the item is a bottle. If it is a bottle, the user's points are updated on a webpage; if not, the machine rejects the item.
 
-### Arduino pin-outs
-![project components](https://github.com/user-attachments/assets/3f1db13c-b262-45ed-8003-2cd44975840e)
+### Wiring Diagram
+[Wiring Diagram 1.pdf](https://github.com/user-attachments/files/17082558/Wiring.Diagram.1.pdf) Credit goes to our group member, Sithija
+![Wiring Diagram](https://github.com/user-attachments/assets/539a6978-1a2a-4b06-8475-db89f8a48de3)
+
 
 ### Table of Contents
 * [Features](Features)
