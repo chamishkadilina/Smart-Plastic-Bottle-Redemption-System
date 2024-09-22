@@ -38,9 +38,9 @@ void setup() {
   lcd.init(); // Initialize LCD
   lcd.backlight(); // Turn on LCD backlight
   
-  LoadCell.begin(); // Start HX711
-  LoadCell.start(1000); // Allow time for stabilization
-  LoadCell.setCalFactor(1000); // Calibration factor (adjust as per setup)
+  // LoadCell.begin(); // Start HX711
+  // LoadCell.start(1000); // Allow time for stabilization
+  // LoadCell.setCalFactor(1000); // Calibration factor (adjust as per setup)
 }
 
 // main code, this run repeatedly
@@ -96,8 +96,9 @@ void loop() {
     delay(3000); // Wait for bottle insertion
 
     // Measure weight after bottle insertion using load cell
-    LoadCell.update(); // Update load cell data
-    float weight = LoadCell.getData(); // Get weight in grams
+    // LoadCell.update(); // Update load cell data
+    // float weight = LoadCell.getData(); // Get weight in grams
+    float weight = 20;
     
     // Display weight on LCD
     lcd.clear();
