@@ -123,60 +123,63 @@ void loop() {
 
         // Accepted by Python OpenCV
         if (message == "Plastic bottle detected!") {
-          // tell user to checky your balance on over website
+          // Rotate servo to accept box and then return to initial position
+          moveServo(bottleServo, 90,180);  
+          moveServo(bottleServo, 180, 90);
+
+          // Display 'Check balance on our website.' on LCD
           lcd.setCursor(0, 0); 
           lcd.print("Check balance");
           lcd.setCursor(0, 1); 
           lcd.print("on our website.");
           delay(3000);
-
-          // Rotate servo to accept box and then return to initial position
-          moveServo(bottleServo, 90,180);  
-          moveServo(bottleServo, 180, 90);
         }
 
         // Rejected by Python OpenCV
         else if (message == "No plastic bottle detected.") {
-          // Display 'Bottle weight ok' on LCD
+          // Rotate servo to reject box and then return to initial position
+          moveServo(bottleServo, 90, 0);  
+          moveServo(bottleServo, 0, 90);  
+
+          // Display 'rejected by Python OpenCV' on LCD
           lcd.setCursor(0, 0); 
           lcd.print("rejected by");
           lcd.setCursor(0, 1); 
           lcd.print("Python OpenCV");
           delay(3000);
-
-          // Rotate servo to reject box and then return to initial position
-          moveServo(bottleServo, 90, 0);  
-          moveServo(bottleServo, 0, 90);  
         }
+
         // Image capture failed
         else {
+          // Rotate servo to reject box and then return to initial position
+          moveServo(bottleServo, 90, 0);  
+          moveServo(bottleServo, 0, 90); 
+
           // Display 'capture Failed' on LCD
           lcd.setCursor(0, 0); 
           lcd.print("capture Failed");
           delay(3000);
-          // Rotate servo to reject box and then return to initial position
-          moveServo(bottleServo, 90, 0);  
-          moveServo(bottleServo, 0, 90); 
         }
       } 
     }
 
     // Weight is outside the acceptable range
     else {
+      // Rotate servo to reject box and then return to initial position
+      moveServo(bottleServo, 90, 0);
+      moveServo(bottleServo, 0, 90);
+
       // Display 'Reject bottle' on LCD
       lcd.setCursor(0, 0);
       lcd.print("Weight out of");
       lcd.setCursor(0, 1);
       lcd.print("range");
       delay(3000);
-      // Rotate servo to reject box and then return to initial position
-      moveServo(bottleServo, 90, 0);
-      moveServo(bottleServo, 0, 90);
     }
 
     // Reset load cell for next operation
-    LoadCell.powerDown();
-    LoadCell.powerUp();
+    // LoadCell.powerDown();
+    // LoadCell.powerUp();
     delay(100); // Delay for stabilization
     lcd.clear();
   }
