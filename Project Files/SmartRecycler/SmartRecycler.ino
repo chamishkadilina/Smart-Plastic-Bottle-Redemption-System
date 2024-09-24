@@ -10,7 +10,7 @@ Servo bottleServo;
 int angle = 0;
 
 // Define pins for HX711, RFID, and LCD
-HX711_ADC LoadCell(4, 5); // DT pin = 4, SCK pin = 5
+HX711_ADC LoadCell(A1, A0); // DT pin = A1, SCK pin = A0
 #define SS_PIN 10
 #define RST_PIN 9
 MFRC522 mfrc522(SS_PIN, RST_PIN);
@@ -68,14 +68,17 @@ void loop() {
   String cardUID = content.substring(1); // card user id assign to a variable named 'cardUID'
 
   // Check if the scanned RFID card is registered or not
-  if (cardUID == "33 6 72 A9" || cardUID == "A3 48 13 AA" || cardUID == "F3 C9 71 A9") {
+  if (cardUID == "33 06 72 A9" || cardUID == "A3 48 13 AA" || cardUID == "F3 C9 71 A9" || cardUID == "53 F0 6E 0E") {
 
     // Assign a user name for specific RFID Card using if condition
-    if (cardUID == "33 6 72 A9") {
+    if (cardUID == "33 06 72 A9") {
       userName = "Chamishka Dilina";
 
     }else if (cardUID == "A3 48 13 AA") {
       userName = "Harini Kokilani";
+
+    }else if (cardUID == "53 F0 6E 0E") {
+      userName = "Sithija Supun";
 
     }else {
       userName = "Promod Chanuka";
@@ -91,20 +94,20 @@ void loop() {
 
     // Open servo motor to allow bottle insert to the machine
     boxOpener.write(0); // Rotate servo to 0 degrees
-    delay(3000); // Wait for servo to open
+    delay(5000); // Wait for servo to open
     boxOpener.write(90); // Rotate servo to 90 degrees (adjust as needed)
-    delay(3000); // Wait for bottle insertion
+    delay(5000); // Wait for bottle insertion
 
-    // Measure weight after bottle insertion using load cell
+    // // Measure weight after bottle insertion using load cell
     // LoadCell.update(); // Update load cell data
     // float weight = LoadCell.getData(); // Get weight in grams
     float weight = 20;
     
     // Display weight on LCD
-    lcd.clear();
-    lcd.setCursor(0, 0);
-    lcd.print("Weight: ");
-    lcd.print(weight);
+    // lcd.clear();
+    // lcd.setCursor(0, 0);
+    // lcd.print("Weight: ");
+    // lcd.print(weight);
   
     // Check if weight is within our acceptable range
     if (weight >= minWeight && weight <= maxWeight) {
@@ -178,8 +181,8 @@ void loop() {
     }
 
     // Reset load cell for next operation
-    // LoadCell.powerDown();
-    // LoadCell.powerUp();
+    LoadCell.powerDown();
+    LoadCell.powerUp();
     delay(100); // Delay for stabilization
     lcd.clear();
   }
@@ -197,11 +200,11 @@ void loop() {
   }
 
   // messege at the end of program 'thank for using our system!'
-  lcd.setCursor(0, 0); 
-  lcd.print("Thanks for using");
-  lcd.setCursor(0, 1); 
-  lcd.print("our system :)");
-  delay(3000);
+  // lcd.setCursor(0, 0); 
+  // lcd.print("Thanks for using");
+  // lcd.setCursor(0, 1); 
+  // lcd.print("our system :)");
+  // delay(3000);
 
   // Delay to prevent serial flooding
   delay(2000);
