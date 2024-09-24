@@ -94,9 +94,9 @@ void loop() {
 
     // Open servo motor to allow bottle insert to the machine
     boxOpener.write(0); // Rotate servo to 0 degrees
-    delay(5000); // Wait for servo to open
+    delay(6000); // Wait for servo to open
     boxOpener.write(90); // Rotate servo to 90 degrees (adjust as needed)
-    delay(5000); // Wait for bottle insertion
+    delay(1000); // Wait for bottle insertion
 
     // // Measure weight after bottle insertion using load cell
     // LoadCell.update(); // Update load cell data
